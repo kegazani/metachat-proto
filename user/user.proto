@@ -159,9 +159,67 @@ message ListUsersResponse {
   int32 limit = 4;
 }
 
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+  string id = 2;
+}
+
+message RegisterRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string first_name = 4;
+  string last_name = 5;
+}
+
+message RegisterResponse {
+  string token = 1;
+  string id = 2;
+}
+
+message ProfileProgress {
+  int32 tokens_analyzed = 1;
+  int32 tokens_required_for_first = 2;
+  int32 tokens_required_for_recalc = 3;
+  int32 days_since_last_calc = 4;
+  int32 days_until_recalc = 5;
+  bool is_first_calculation = 6;
+  double progress_percentage = 7;
+}
+
+message UserStatistics {
+  int32 total_diary_entries = 1;
+  int32 total_mood_analyses = 2;
+  int32 total_tokens = 3;
+  string dominant_emotion = 4;
+  repeated string top_topics = 5;
+  google.protobuf.Timestamp profile_created_at = 6;
+  google.protobuf.Timestamp last_personality_update = 7;
+}
+
+message GetUserProfileProgressRequest {
+  string id = 1;
+}
+
+message GetUserProfileProgressResponse {
+  ProfileProgress progress = 1;
+}
+
+message GetUserStatisticsRequest {
+  string id = 1;
+}
+
+message GetUserStatisticsResponse {
+  UserStatistics statistics = 1;
+}
+
 // UserService definition
 service UserService {
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
   rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
   rpc AssignArchetype(AssignArchetypeRequest) returns (AssignArchetypeResponse);
@@ -170,4 +228,8 @@ service UserService {
   rpc GetUserReadModel(GetUserReadModelRequest) returns (GetUserReadModelResponse);
   rpc GetUserArchetypeReadModel(GetUserArchetypeReadModelRequest) returns (GetUserArchetypeReadModelResponse);
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc GetUserProfileProgress(GetUserProfileProgressRequest) returns (GetUserProfileProgressResponse);
+  rpc GetUserStatistics(GetUserStatisticsRequest) returns (GetUserStatisticsResponse);
 }

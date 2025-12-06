@@ -92,6 +92,15 @@ message UpdateUserPortraitResponse {
   google.protobuf.Empty empty = 1;
 }
 
+message GetCommonTopicsRequest {
+  string user_id1 = 1;
+  string user_id2 = 2;
+}
+
+message GetCommonTopicsResponse {
+  repeated string common_topics = 1;
+}
+
 // MatchingService definition
 service MatchingService {
   rpc FindSimilarUsers(FindSimilarUsersRequest) returns (FindSimilarUsersResponse);
@@ -100,4 +109,5 @@ service MatchingService {
   rpc GetUserMatches(GetUserMatchesRequest) returns (GetUserMatchesResponse);
   rpc GetUserPortrait(GetUserPortraitRequest) returns (GetUserPortraitResponse);
   rpc UpdateUserPortrait(UpdateUserPortraitRequest) returns (UpdateUserPortraitResponse);
+  rpc GetCommonTopics(GetCommonTopicsRequest) returns (GetCommonTopicsResponse);
 }
